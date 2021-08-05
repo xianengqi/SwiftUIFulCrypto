@@ -36,9 +36,9 @@ struct CircleButtonView_Previews: PreviewProvider {
             CircleButtonView(iconName: "info")
                 .previewLayout(.sizeThatFits) // 更改为合适的预览模式
             
-//            CircleButtonView(iconName: "plus")
-//                .previewLayout(.sizeThatFits) // 更改为合适的预览模式
-//                .colorScheme(.dark)
+            CircleButtonView(iconName: "plus")
+                .previewLayout(.sizeThatFits) // 更改为合适的预览模式
+                .preferredColorScheme(.dark)
         }
     }
 }
