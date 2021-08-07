@@ -15,6 +15,8 @@
 		C332E0A026B971230057DDFE /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C332E09F26B971230057DDFE /* HomeView.swift */; };
 		C332E0A426B973910057DDFE /* CircleButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C332E0A326B973910057DDFE /* CircleButtonView.swift */; };
 		C332E0A626B9799E0057DDFE /* CircleButtonAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C332E0A526B9799E0057DDFE /* CircleButtonAnimationView.swift */; };
+		C352F5E126BE863400EE0BB3 /* HomeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C352F5E026BE863400EE0BB3 /* HomeViewModel.swift */; };
+		C352F5E426BE8F9A00EE0BB3 /* CoinDataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = C352F5E326BE8F9A00EE0BB3 /* CoinDataServices.swift */; };
 		C3C8CB1A26BAA94E00CF6B3B /* CoinModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8CB1926BAA94E00CF6B3B /* CoinModel.swift */; };
 		C3C8CB1C26BABB8D00CF6B3B /* CoinRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8CB1B26BABB8D00CF6B3B /* CoinRowView.swift */; };
 		C3C8CB1E26BABC4600CF6B3B /* PreviewProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3C8CB1D26BABC4600CF6B3B /* PreviewProvider.swift */; };
@@ -32,6 +34,8 @@
 		C332E09F26B971230057DDFE /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		C332E0A326B973910057DDFE /* CircleButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonView.swift; sourceTree = "<group>"; };
 		C332E0A526B9799E0057DDFE /* CircleButtonAnimationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleButtonAnimationView.swift; sourceTree = "<group>"; };
+		C352F5E026BE863400EE0BB3 /* HomeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewModel.swift; sourceTree = "<group>"; };
+		C352F5E326BE8F9A00EE0BB3 /* CoinDataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinDataServices.swift; sourceTree = "<group>"; };
 		C3C8CB1926BAA94E00CF6B3B /* CoinModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinModel.swift; sourceTree = "<group>"; };
 		C3C8CB1B26BABB8D00CF6B3B /* CoinRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinRowView.swift; sourceTree = "<group>"; };
 		C3C8CB1D26BABC4600CF6B3B /* PreviewProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviewProvider.swift; sourceTree = "<group>"; };
@@ -70,6 +74,7 @@
 			children = (
 				C332E08926B960FA0057DDFE /* SwiftUIFulCryptoApp.swift */,
 				C332E09826B9658D0057DDFE /* Extensions */,
+				C352F5E226BE8F4E00EE0BB3 /* Services */,
 				C3C8CB1826BAA90700CF6B3B /* Models */,
 				C332E09B26B96ECF0057DDFE /* Core */,
 				C332E09726B961860057DDFE /* Info.plist */,
@@ -128,6 +133,7 @@
 		C332E09E26B971010057DDFE /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				C352F5E026BE863400EE0BB3 /* HomeViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -147,6 +153,14 @@
 				C332E0A526B9799E0057DDFE /* CircleButtonAnimationView.swift */,
 			);
 			path = CircleButton;
+			sourceTree = "<group>";
+		};
+		C352F5E226BE8F4E00EE0BB3 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C352F5E326BE8F9A00EE0BB3 /* CoinDataServices.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		C3C8CB1826BAA90700CF6B3B /* Models */ = {
@@ -228,8 +242,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C3C8CB1C26BABB8D00CF6B3B /* CoinRowView.swift in Sources */,
+				C352F5E126BE863400EE0BB3 /* HomeViewModel.swift in Sources */,
 				C332E08C26B960FA0057DDFE /* ContentView.swift in Sources */,
 				C332E0A026B971230057DDFE /* HomeView.swift in Sources */,
+				C352F5E426BE8F9A00EE0BB3 /* CoinDataServices.swift in Sources */,
 				C332E08A26B960FA0057DDFE /* SwiftUIFulCryptoApp.swift in Sources */,
 				C332E0A426B973910057DDFE /* CircleButtonView.swift in Sources */,
 				C332E09A26B965C00057DDFE /* Color.swift in Sources */,

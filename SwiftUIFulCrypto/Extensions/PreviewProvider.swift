@@ -20,6 +20,9 @@ class DeveloperPreview {
     // 单例
     static let instance = DeveloperPreview()
     private init() {}
+    
+    let homeVM = HomeViewModel()
+    
     // 假数据
     let coin = CoinModel(
        id: "bitcoin",
