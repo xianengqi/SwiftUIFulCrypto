@@ -22,29 +22,14 @@ class CoinDataServices {
         
         // combine很棒
         // 获得订阅
-        coinSubscription = URLSession.shared.dataTaskPublisher(for: url)
-            .subscribe(on: DispatchQueue.global(qos: .default))
-            .tryMap { (output) -> Data in
-                guard let response = output.response as? HTTPURLResponse,
-                      response.statusCode >= 200 && response.statusCode < 300 else {
-                          throw URLError(.badServerResponse)
-                      }
-                return output.data
-            }
-            .receive(on: DispatchQueue.main)
+        coinSubscription = NetworkingManager.download(url: url)
         // 解码
             .decode(type: [CoinModel].self, decoder: JSONDecoder())
-            .sink { (completion) in //订阅者,因为它是一个订阅者，意味着随时可以取消，所以我们要把它存到`coinSubscription`
-                switch completion {
-                case .finished:
-                    break
-                case .failure(let error):
-                    print(error.localizedDescription)
-                }
-            } receiveValue: { [weak self] (returnedCoins) in
+            .sink(receiveCompletion: NetworkingManager.handleCompletion, receiveValue: { [weak self] (returnedCoins) in
                 self?.allCoins = returnedCoins
                 self?.coinSubscription?.cancel()
-            }
+            })
+            
 //            .store(in: &cancellables)
 
     }
