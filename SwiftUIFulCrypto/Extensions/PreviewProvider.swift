@@ -23,6 +23,11 @@ class DeveloperPreview {
     
     let homeVM = HomeViewModel()
     
+    // 假数据，方便预览模式
+    let stat1 = StatisticModel(title: "Market Cap", value: "$12.15Bn", percentageChange: 25.34)
+    let stat2 = StatisticModel(title: "Total Volume", value: "$1.23Tr")
+    let stat3 = StatisticModel(title: "Portfolio Value", value: "$50.4k", percentageChange: -12.34)
+ 
     // 假数据
     let coin = CoinModel(
        id: "bitcoin",
