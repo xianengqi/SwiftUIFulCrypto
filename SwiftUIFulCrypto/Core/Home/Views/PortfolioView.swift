@@ -149,6 +149,7 @@ extension PortfolioView {
         
         // Save to portfolio
         vm.updatePortfolio(coin: coin, amount: amount)
+        vm.reloadData()
         
         // show checkmark
         withAnimation(.easeIn) {
