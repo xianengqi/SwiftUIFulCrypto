@@ -17,11 +17,17 @@ class HomeViewModel: ObservableObject {
     @Published var portfolioCoins: [CoinModel] = []
     @Published var isLoading: Bool = false
     @Published var searchText: String = ""
+    @Published var sortOption: SortOption = .holdings
     
     private let coinDataService = CoinDataServices()
     private let marketDataService = MarketDataService()
     private let portfolioDataService = PortfolioDataService()
     private var cancelables = Set<AnyCancellable>()
+    
+    // 排序
+    enum SortOption {
+        case rank, rankReversed, holdings, holdingsReversed, price, pricereversed
+    }
     
     init() {
         addSubscribers()
@@ -38,11 +44,11 @@ class HomeViewModel: ObservableObject {
         
         /// updates allCoins
         $searchText
-            .combineLatest(coinDataService.$allCoins)
+            .combineLatest(coinDataService.$allCoins, $sortOption)
         // 添加去抖动，··假如用户快速输入10次的时候可能要在数据库请求10次，如果数据库量大那就会在屏幕上体验不好卡顿。
         // 所以给添加防抖
             .debounce(for: .seconds(0.5), scheduler: DispatchQueue.main)
-            .map(filterCoins)
+            .map(filterAndSortCoins)
         ///   把这串代码封装成一个私有函数`filterCoins`，方便调用
 //            .map { (text, startingCoins) -> [CoinModel] in
 //                guard !text.isEmpty else {
@@ -66,7 +72,8 @@ class HomeViewModel: ObservableObject {
             .combineLatest(portfolioDataService.$savedEntities)
             .map(mapAllCoinsToPortfolioCoins)
             .sink { [weak self] (returndeCoins) in
-                self?.portfolioCoins = returndeCoins
+                guard let self = self else { return }
+                self.portfolioCoins = self.sortPortfolioCoinsIfNeeds(coins: returndeCoins)
             }
             .store(in: &cancelables)
         
@@ -95,16 +102,54 @@ class HomeViewModel: ObservableObject {
         HapticManager.notification(type: .success)
     }
     
-    private func filterCoins(text: String, coin: [CoinModel]) -> [CoinModel] {
+    private func filterAndSortCoins(text: String, coins: [CoinModel], sort: SortOption) -> [CoinModel] {
+        var updateCoins = filterCoins(text: text, coins: coins)
+        sortCoins(sort: sort, coins: &updateCoins)
+        // sort
+        return updateCoins
+    }
+    
+    private func filterCoins(text: String, coins: [CoinModel]) -> [CoinModel] {
         guard !text.isEmpty else {
-            return coin
+            return coins
         }
         
         let lowercasedText = text.lowercased() // 转换为小写
-        return coin.filter { (coin) -> Bool in
+        return coins.filter { (coin) -> Bool in
             return coin.name.lowercased().contains(lowercasedText) ||
             coin.symbol.lowercased().contains(lowercasedText) ||
             coin.id.lowercased().contains(lowercasedText)
+        }
+    }
+    
+    // 排序
+    private func sortCoins(sort: SortOption, coins: inout [CoinModel]) {
+        switch sort {
+        case .rank, .holdings:
+            // 这是简化的写法
+             coins.sort(by: { $0.rank < $1.rank })
+            // 这个写法和上面的写法一样
+//            return coins.sorted { (coin1, coin2) -> Bool in
+//                return coin1.rank < coin2.rank
+//            }
+        case .rankReversed, .holdingsReversed:
+            coins.sort(by: { $0.rank > $1.rank })
+        case .price:
+             coins.sort(by: { $0.currentPrice > $1.currentPrice })
+        case .pricereversed:
+             coins.sort(by: { $0.currentPrice < $1.currentPrice })
+        }
+    }
+    
+    private func sortPortfolioCoinsIfNeeds(coins: [CoinModel]) -> [CoinModel] {
+        switch sortOption {
+        case .holdings:
+            return coins.sorted(by: { $0.currentHoldingsValue > $1.currentHoldingsValue })
+        case .holdingsReversed:
+            return coins.sorted(by: { $0.currentHoldingsValue < $1.currentHoldingsValue})
+        default:
+            return coins
+        
         }
     }
     
